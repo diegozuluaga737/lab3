@@ -3,12 +3,16 @@
 #include<fstream>
 using namespace std;
 
-void lectura();
+string lectura();
+void binario(string texto);
+
 
 
 
 int main(){
- lectura();
+
+  string texto=lectura();
+  binario(texto);
 
  return 0;
 }
@@ -17,9 +21,9 @@ int main(){
 
 
 
-void lectura(){                 //leer un txt y guardarlo en un 
- ifstream archivo;
- string  texto;
+string lectura(){                 //leer un txt y guardarlo en un string
+    string texto;
+    ifstream archivo;
 
  archivo.open("probando.txt",ios::in);
 
@@ -31,8 +35,30 @@ void lectura(){                 //leer un txt y guardarlo en un
 
  while(!archivo.eof()){
   getline(archivo,texto);           //deja el texto guardado en un string
-  cout<<texto<<endl;
+
  }
 
  archivo.close();
+ return texto;
 }
+
+
+
+void binario(string texto){
+    string binario="";
+    for (float i=0;i<texto.size();i++ ) {
+        int ascii= int(texto[i]);
+        for (int j=0;j<8 ;j++ ) {
+            if (ascii%2==0) binario= '0' + binario;
+
+            if(ascii%2==1) binario= '1' + binario;
+
+            ascii/=2;
+        }
+
+
+    }
+   
+
+}
+
