@@ -4,7 +4,8 @@
 using namespace std;
 
 string lectura();
-void binario(string texto);
+string binario(string texto);
+void archivobinario(string strbinario);
 
 
 
@@ -12,7 +13,12 @@ void binario(string texto);
 int main(){
 
   string texto=lectura();
-  binario(texto);
+  string strbinario=binario(texto);
+  archivobinario(strbinario);
+
+
+
+
 
  return 0;
 }
@@ -44,7 +50,7 @@ string lectura(){                 //leer un txt y guardarlo en un string
 
 
 
-void binario(string texto){
+string binario(string texto){
     string binario="";
     for (float i=0;i<texto.size();i++ ) {
         int ascii= int(texto[i]);
@@ -55,10 +61,27 @@ void binario(string texto){
 
             ascii/=2;
         }
-
-
     }
-    cout<<binario;
+
+return binario;
+}
+
+
+void archivobinario(string strbinario){
+
+    ofstream archivobinario;
+
+    archivobinario.open("pruebabinario.txt",ios::out);
+
+    if(archivobinario.fail()){
+     cout<<"\nNo se pudo abrir el archivo."<<endl;
+     exit(1);
+    }
+
+    archivobinario<<strbinario;
+
+
+    archivobinario.close();
 
 }
 
