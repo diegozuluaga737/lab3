@@ -6,7 +6,7 @@ using namespace std;
 string lectura();
 string binario(string );
 void archivobinario(string );
-void metodo(int n, string);
+string metodo(int n, string);
 
 
 //Primer metodo.....
@@ -15,15 +15,16 @@ int main(){
 
   string texto=lectura();
   string strbinario=binario(texto);
-  archivobinario(strbinario);
+
 
   int n;
   cout<<"ingrese la semilla de codificacion"<<endl;
   cin>>n;
 
-  string bin=lectura();
-  metodo(n, bin);
+ string bincod= metodo(n, strbinario);
 
+
+ archivobinario(bincod);
 
 
  return 0;
@@ -34,7 +35,7 @@ int main(){
 
 
 string lectura(){                 //leer un txt y guardarlo en un string
-    string texto;
+    string texto0="",texto="";
     ifstream archivo;
 
  archivo.open("probando.txt",ios::in);
@@ -45,10 +46,14 @@ string lectura(){                 //leer un txt y guardarlo en un string
  }
  cout<<"\n";
 
- while(!archivo.eof()){
-  getline(archivo,texto);           //deja el texto guardado en un string
+ while(archivo.good()){
+getline(archivo,texto0);
+texto.append(texto0);
+texto.append("\n");
 
  }
+ texto.pop_back();
+
 
  archivo.close();
  return texto;
@@ -57,58 +62,40 @@ string lectura(){                 //leer un txt y guardarlo en un string
 
 
 string binario(string texto){           //lee el texto y devuelve un string con el binario
-    string binario="";
-    string binario1="";
-
-    for (float i=0;i<texto.size();i++ ) {
-        int ascii= int(texto[i]);
-        for (int j=0;j<8 ;j++ ) {
-            if (ascii%2==0) binario= '0' + binario;
-
-            if(ascii%2==1) binario= '1' + binario;
-
-            ascii/=2;
-        }
-        binario1=  binario1+ binario;
-        binario="";
-
+    string binario;
+    for(unsigned long long int i=0;i<texto.length();i++){
+        for(int j=0;j<8;j++)binario.push_back(char((((texto[i]<<j)&(0x80))/128)+48));
     }
 
-return binario1;
+
+return binario;
 }
 
 
-void archivobinario(string strbinario){         //reemplaza el texto original y lo combierte a numeros binarios
+void archivobinario(string bincod){         //reemplaza el texto original y lo combierte a un archivo de binarios
 
     ofstream archivobinario;
 
-    archivobinario.open("probando.txt",ios::out);
+    archivobinario.open("binario.dat",ios::out|ios::binary);
 
     if(archivobinario.fail()){
      cout<<"No se pudo abrir el archivo."<<endl;
      exit(1);
     }
 
-    archivobinario<<strbinario;
+    archivobinario<<bincod;
 
 
     archivobinario.close();
 
 }
 
-void metodo(int n, string bin){                 //codifica el texto y crea uno nuevo
-
-    ofstream archivocod;
-    string bincod="";
-
-    archivocod.open("probandocod.txt",ios::out);
-
-    if(archivocod.fail()){
-     cout<<"No se pudo abrir el archivo."<<endl;
-     exit(1);
-    }
+string metodo(int n, string bin){                 //codifica el texto
+    string bincod;
 
     for (int i=0;i<n ;i++ ) {
+        if (bin.size()==bincod.size()) break;
+
         if(bin[i]==49) bincod=bincod + '0';
         else {
             bincod=bincod + '1';
@@ -135,6 +122,8 @@ void metodo(int n, string bin){                 //codifica el texto y crea uno n
         for (int num=0;num<n ;j++,num++ ) {
 
 
+
+            if (bin.size()==bincod.size()) break;
             if (con==1) {
                 if(bin[j]==49) bincod=bincod + '0';
                 else {
@@ -151,6 +140,8 @@ void metodo(int n, string bin){                 //codifica el texto y crea uno n
     }
     if(cont0<cont1){
         for (int num=0;num<n ;j++,num++ ) {
+            if (bin.size()==bincod.size()) break;
+
 
           if (con==2) {
                 if(bin[j]==49) bincod=bincod + '0';
@@ -169,6 +160,9 @@ void metodo(int n, string bin){                 //codifica el texto y crea uno n
     }
     if(cont0==cont1){
         for (int num=0;num<n ;j++,num++ ) {
+
+            if (bin.size()==bincod.size()) break;
+
             if(bin[j]==49) bincod=bincod + '0';
             else {
                 bincod=bincod + '1';
@@ -180,10 +174,8 @@ void metodo(int n, string bin){                 //codifica el texto y crea uno n
     cont1=0;
 
 }
-    archivocod<<bincod;
 
-
-    archivocod.close();
+    return bincod;
 
 }
 
