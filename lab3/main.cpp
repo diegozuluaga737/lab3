@@ -1,12 +1,16 @@
 #include<iostream>
 #include<stdlib.h>
 #include<fstream>
+#include <cmath>
+
+
 using namespace std;
 
 string lectura();
 string binario(string );
 void archivobinario(string );
 string metodo(int n, string);
+string codificado(string bincod);
 
 
 //Primer metodo.....
@@ -23,12 +27,60 @@ int main(){
 
  string bincod= metodo(n, strbinario);
 
+ string cod=codificado(bincod);
 
- archivobinario(bincod);
+
+archivobinario(cod);
 
 
  return 0;
 }
+
+
+string codificado(string bincod){               //convertir binario a caracteres
+
+        string codificado;
+        int aux;
+
+        float i=0;
+
+        for (;i<bincod.size(); ) {
+            for (int j=0,cont=0;j<8 ;j++,i++,cont++ ) {
+
+                if (bincod[i]=='1'){
+                    if(cont==0) aux=aux+ pow(2, 7);
+                    if(cont==1) aux=aux+ pow(2, 6);
+                    if(cont==2) aux=aux+ pow(2, 5);
+                    if(cont==3) aux=aux+ pow(2, 4);
+                    if(cont==4) aux=aux+ pow(2, 3);
+                    if(cont==5) aux=aux+ pow(2, 2);
+                    if(cont==6) aux=aux+ pow(2, 1);
+                    if(cont==7) aux=aux+ pow(2, 0);
+
+
+
+                }
+
+            }
+            char ascii=char(aux);
+            codificado=codificado + ascii;
+            aux=0;
+
+        }
+
+
+
+
+return codificado;
+
+
+}
+
+
+
+
+
+
 
 
 
