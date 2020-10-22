@@ -18,8 +18,8 @@ int main(){
   cin>>n;
 
  string bincod= metodo(n, strbinario);
- string cod=codificado(bincod);
-
+ //string cod=codificado(bincod);
+string cod=Binary_to_Str( bincod);
  cout<<"ingrese el nombre que tendra el archivo codificado"<<endl;
  cin>>nombre;
 
@@ -41,8 +41,8 @@ cout<<"ingrese la semilla de decodificacion"<<endl;
 cin>>n;
 
 bincod=metododecodificacion(n,strbinario);
-cod=codificado(bincod);
-
+//cod=codificado(bincod);
+cod=Binary_to_Str( bincod);
 cout<<"ingrese el nombre que tendra el archivo decodificado"<<endl;
 cin>>nombre;
 
@@ -51,3 +51,4 @@ archivobinario(cod, nombre);
 
  return 0;
 }
+//---
