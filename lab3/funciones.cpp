@@ -20,7 +20,7 @@ string lectura(string nombre){                 //leer un arcrivo y guardarlo en 
 
     ifstream archivo;
 
- archivo.open(nombre,ios::in);
+ archivo.open(nombre,ios::in|ios::binary);
 
  if(archivo.fail()){
   cout<<"\nNo se pudo abrir el archivo.";
